@@ -1,4 +1,5 @@
 import allure
+from selenium.common import NoSuchElementException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait as wait
 from selenium.webdriver.support import expected_conditions as EC
@@ -99,3 +100,18 @@ class BasePage:
         action = ActionChains(self.driver)
         action.move_to_element(element)
         action.perform()
+
+    @allure.step("Find element by text")
+    def find_element_by_text(self, locator, text, timeout=5):
+        """
+        This method attempts to find an element by its displayed text.
+        It will wait until the element with the specified text is present or until the timeout expires.
+        Locator - is used to find the elements.
+        Text - the visible text of the element.
+        Timeout - the duration it will wait for. The default is set to 5 seconds, but it can be modified if needed.
+        """
+        elements = self.elements_are_present(locator, timeout)
+        for element in elements:
+            if element.text == text:
+                return element
+        raise NoSuchElementException(f"No element with text '{text}' found.")
