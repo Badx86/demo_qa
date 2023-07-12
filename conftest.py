@@ -7,6 +7,6 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 @pytest.fixture(scope="function")
 def driver():
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
-    driver.maximize_window()
+    driver.set_window_size(1920, 1080)
     yield driver
     driver.quit()
