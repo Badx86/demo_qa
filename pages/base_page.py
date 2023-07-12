@@ -1,6 +1,7 @@
 import allure
 from selenium.common import NoSuchElementException
 from selenium.webdriver import ActionChains
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait as wait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -115,3 +116,11 @@ class BasePage:
             if element.text == text:
                 return element
         raise NoSuchElementException(f"No element with text '{text}' found.")
+
+    @allure.step("Check if element is present on the page")
+    def element_with_text_is_present(self, element_name):
+        try:
+            self.driver.find_element(By.XPATH, f"//*[text()='{element_name}']")
+            return True
+        except NoSuchElementException:
+            return False
