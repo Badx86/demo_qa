@@ -9,12 +9,12 @@ class BasePage:
         self.driver = driver
         self.url = url
 
-    @allure.step('Open a browser')
+    @allure.step("Open a browser")
     def open(self):
         """This method opens a browser by the provided link"""
         self.driver.get(self.url)
 
-    @allure.step('Find a visible element')
+    @allure.step("Find a visible element")
     def element_is_visible(self, locator, timeout=5):
         """
         This method expects to verify that the element is present in the DOM tree, visible, and displayed on the page.
@@ -23,9 +23,11 @@ class BasePage:
         Timeout - the duration it will wait for. The default is set to 5 seconds, but it can be modified if needed.
         """
         self.go_to_element(self.element_is_present(locator))
-        return wait(self.driver, timeout).until(EC.visibility_of_element_located(locator))
+        return wait(self.driver, timeout).until(
+            EC.visibility_of_element_located(locator)
+        )
 
-    @allure.step('Find visible elements')
+    @allure.step("Find visible elements")
     def elements_are_visible(self, locator, timeout=5):
         """
         This method expects to verify that the elements are present in the DOM tree, visible and displayed on the page.
@@ -33,9 +35,11 @@ class BasePage:
         Locator - is used to find the elements.
         Timeout - the duration it will wait for. The default is set to 5 seconds, but it can be modified if needed.
         """
-        return wait(self.driver, timeout).until(EC.visibility_of_all_elements_located(locator))
+        return wait(self.driver, timeout).until(
+            EC.visibility_of_all_elements_located(locator)
+        )
 
-    @allure.step('Find a present element')
+    @allure.step("Find a present element")
     def element_is_present(self, locator, timeout=5):
         """
         This method expects to verify that the element is present in the DOM tree,
@@ -45,7 +49,7 @@ class BasePage:
         """
         return wait(self.driver, timeout).until(EC.presence_of_element_located(locator))
 
-    @allure.step('Find present elements')
+    @allure.step("Find present elements")
     def elements_are_present(self, locator, timeout=5):
         """
         This method expects to verify that the elements are present in the DOM tree,
@@ -53,9 +57,11 @@ class BasePage:
         Locator - is used to find the elements.
         Timeout - the duration it will wait for. The default is set to 5 seconds, but it can be modified if needed.
         """
-        return wait(self.driver, timeout).until(EC.presence_of_all_elements_located(locator))
+        return wait(self.driver, timeout).until(
+            EC.presence_of_all_elements_located(locator)
+        )
 
-    @allure.step('Find a not visible element')
+    @allure.step("Find a not visible element")
     def element_is_not_visible(self, locator, timeout=5):
         """
         This method expects to verify whether the element is invisible or not.
@@ -63,9 +69,11 @@ class BasePage:
         Locator - is used to find the element.
         Timeout - the duration it will wait for. The default is set to 5 seconds, but it can be modified if needed.
         """
-        return wait(self.driver, timeout).until(EC.invisibility_of_element_located(locator))
+        return wait(self.driver, timeout).until(
+            EC.invisibility_of_element_located(locator)
+        )
 
-    @allure.step('Find clickable elements')
+    @allure.step("Find clickable elements")
     def element_is_clickable(self, locator, timeout=5):
         """
         This method expects to verify that the element is visible, displayed on the page, and enabled.
@@ -75,14 +83,14 @@ class BasePage:
         """
         return wait(self.driver, timeout).until(EC.element_to_be_clickable(locator))
 
-    @allure.step('Go to specified element')
+    @allure.step("Go to specified element")
     def go_to_element(self, element):
         """
         This method scrolls the page to the selected element, making it visible to the user.
         """
         self.driver.execute_script("arguments[0].scrollIntoView();", element)
 
-    @allure.step('Move cursor to element')
+    @allure.step("Move cursor to element")
     def action_move_to_element(self, element):
         """
         This method moves the mouse cursor to the center of the selected element, simulating a hover action.
@@ -91,4 +99,3 @@ class BasePage:
         action = ActionChains(self.driver)
         action.move_to_element(element)
         action.perform()
-
