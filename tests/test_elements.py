@@ -10,7 +10,7 @@ class TestElements:
     class TestTextBox:
         @allure.story("")
         @allure.severity(allure.severity_level.NORMAL)
-        def test_text_box(self, driver):
+        def test_text_box_output(self, driver):
             page = TextBoxPage(driver, TEXT_BOX_URL)
             page.open()
             person_info = page.fill_all_fields()
@@ -29,3 +29,13 @@ class TestElements:
                 assert page.element_with_text_is_present(element_name), \
                     f"Element {element_name} is not present on the page"
 
+        @allure.story("")
+        @allure.severity(allure.severity_level.NORMAL)
+        def test_check_box_random(self, driver):
+            page = CheckBoxPage(driver, CHECK_BOX_URL)
+            page.open()
+            page.expand_all()
+            page.click_random_checkbox()
+            input_checkbox = page.get_checked_checkboxes()
+            output_result = page.get_output_result()
+            assert input_checkbox == output_result, "Checkboxes have not been selected"

@@ -1,7 +1,5 @@
+import random
 import allure
-from selenium.common import NoSuchElementException
-from selenium.webdriver.common.by import By
-from data.elements import expected_elements
 from generator.generator import generated_person
 from locators.elements_page_locators import TextBoxLocators, CheckBoxLocators
 from pages.base_page import BasePage
@@ -38,4 +36,31 @@ class CheckBoxPage(BasePage):
 
     @allure.step("Expand all elements")
     def expand_all(self):
-        self.element_is_clickable(self.locators.EXPAND_ALL_BUTTON).click()
+        self.element_is_visible(self.locators.EXPAND_ALL_BUTTON).click()
+
+    def click_random_checkbox(self):
+        item_list = self.elements_are_visible(self.locators.ITEMS_LIST)
+        count = 21
+        while count != 0:
+            item = item_list[random.randint(1, 16)]
+            if count > 0:
+                self.go_to_element(item)
+                item.click()
+                count -= 1
+            else:
+                break
+
+    def get_checked_checkboxes(self):
+        checked_list = self.elements_are_present(self.locators.CHECKED_ITEMS)
+        data = []
+        for box in checked_list:
+            title_item = box.find_element(self.locators.ITEMS_TITLE)
+            data.append(title_item.text)
+        return str(data).replace(' ', '').replace('doc', '').replace('.', '').lower()
+
+    def get_output_result(self):
+        result_list = self.elements_are_present(self.locators.RESULT)
+        data = []
+        for item in result_list:
+            data.append(item.text)
+        return str(data).replace(' ', '').lower()
