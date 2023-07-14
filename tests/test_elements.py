@@ -17,6 +17,15 @@ class TestElements:
             output_info = page.check_fill_form()
             assert (person_info == output_info), f"Expected info {person_info}, but got {output_info}"
 
+        @allure.title('Interactivity of the fields')
+        def test_interactivity_of_the_fields(self, driver):
+            page = TextBoxPage(driver, TEXT_BOX_URL)
+            page.open()
+            styles = page.activate_all_fields_and_check_style()
+            for i, style in enumerate(styles):
+                initial_style, active_style = style
+                assert initial_style != active_style, f"Error: Field style at index {i} doesn't change on activation"
+
     @allure.feature("Test Check Box")
     class TestCheckBox:
         @allure.story("Test expanding all elements and check their presence")
@@ -29,7 +38,7 @@ class TestElements:
                 assert page.element_with_text_is_present(element_name), \
                     f"Element {element_name} is not present on the page"
 
-        @allure.story("Test checkboxes")
+        @allure.story("Test checkboxes: random click and output")
         @allure.severity(allure.severity_level.NORMAL)
         def test_check_box_random(self, driver):
             page = CheckBoxPage(driver, CHECK_BOX_URL)
@@ -39,3 +48,5 @@ class TestElements:
             input_checkbox = page.get_checked_checkboxes()
             output_result = page.get_output_result()
             assert input_checkbox == output_result, "Input text and output checkbox is not equal"
+
+        

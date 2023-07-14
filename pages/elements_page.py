@@ -32,6 +32,21 @@ class TextBoxPage(BasePage):
         permanent_address = self.element_is_visible(self.locators.CREATED_PERMANENT_ADDRESS).text.split(":")[1]
         return full_name, email, current_address, permanent_address
 
+    @allure.step('Check all fields activation style changes after clicking/tab on them')
+    def activate_all_fields_and_check_style(self):
+        css_property = 'box-shadow'
+        locators = [
+            self.locators.FULL_NAME,
+            self.locators.EMAIL,
+            self.locators.CURRENT_ADDRESS,
+            self.locators.PERMANENT_ADDRESS
+        ]
+        styles = []
+        for locator in locators:
+            initial_style, active_style = self.activate_and_check_field_style(locator, css_property)
+            styles.append((initial_style, active_style))
+        return styles
+
 
 class CheckBoxPage(BasePage):
     locators = CheckBoxLocators()
