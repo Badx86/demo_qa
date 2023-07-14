@@ -29,7 +29,7 @@ class TestElements:
                 assert page.element_with_text_is_present(element_name), \
                     f"Element {element_name} is not present on the page"
 
-        @allure.story("")
+        @allure.story("Test checkboxes")
         @allure.severity(allure.severity_level.NORMAL)
         def test_check_box_random(self, driver):
             page = CheckBoxPage(driver, CHECK_BOX_URL)
@@ -38,4 +38,4 @@ class TestElements:
             page.click_random_checkbox()
             input_checkbox = page.get_checked_checkboxes()
             output_result = page.get_output_result()
-            assert input_checkbox == output_result, "Checkboxes have not been selected"
+            assert input_checkbox == output_result, "Input text and output checkbox is not equal"

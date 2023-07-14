@@ -3,25 +3,23 @@ from selenium.webdriver.common.by import By
 
 class TextBoxLocators:
     # Text Box(input)
-    FULL_NAME = By.XPATH, "//input[@id='userName']"
-    EMAIL = By.XPATH, "//input[@id='userEmail']"
-    CURRENT_ADDRESS = By.XPATH, "//textarea[@id='currentAddress']"
-    PERMANENT_ADDRESS = By.XPATH, "//textarea[@id='permanentAddress']"
-    SUBMIT_BUTTON = By.XPATH, "//button[@id='submit']"
+    FULL_NAME = (By.CSS_SELECTOR, "input[id='userName']")
+    EMAIL = (By.CSS_SELECTOR, "input[id='userEmail']")
+    CURRENT_ADDRESS = (By.CSS_SELECTOR, "textarea[id='currentAddress']")
+    PERMANENT_ADDRESS = (By.CSS_SELECTOR, "textarea[id='permanentAddress']")
+    SUBMIT_BUTTON = (By.CSS_SELECTOR, "button[id='submit']")
 
     # Output form
     CREATED_FORM = By.XPATH, "//div[@id='output']"
-    CREATED_NAME = By.XPATH, "//p[@id='name']"
-    CREATED_EMAIL = By.XPATH, "//p[@id='email']"
-    CREATED_CURRENT_ADDRESS = By.XPATH, "//p[@id='currentAddress']"
-    CREATED_PERMANENT_ADDRESS = By.XPATH, "//p[@id='permanentAddress']"
+    CREATED_NAME = (By.CSS_SELECTOR, "#output #name")
+    CREATED_EMAIL = (By.CSS_SELECTOR, "#output #email")
+    CREATED_CURRENT_ADDRESS = (By.CSS_SELECTOR, "#output #currentAddress")
+    CREATED_PERMANENT_ADDRESS = (By.CSS_SELECTOR, "#output #permanentAddress")
 
 
 class CheckBoxLocators:
-    # Buttons
-    EXPAND_ALL_BUTTON = By.XPATH, "//button[@title='Expand all']"
-    COLLAPSE_ALL_BUTTON = By.XPATH, "//button[@title='Collapse all']//*[name()='svg']"
-    ITEMS_LIST = By.CSS_SELECTOR, "span[class='rct-title']"
-    RESULT = By.CSS_SELECTOR, "#result"
-    CHECKED_ITEMS = By.CSS_SELECTOR, "svg[class='rct-icon rct-icon-check']"
-    ITEMS_TITLE = By.CSS_SELECTOR, "span[class='rct-title']"
+    EXPAND_BUTTON = (By.CSS_SELECTOR, "button[title='Expand all']")
+    ITEM_LIST = (By.CSS_SELECTOR, "span[class='rct-title']")
+    CHECKED_ITEMS = (By.CSS_SELECTOR, "svg[class='rct-icon rct-icon-check']")
+    TITLE_ITEM = (".//ancestor::span[@class='rct-text']")
+    OUTPUT = (By.CSS_SELECTOR, "span[class='text-success']")

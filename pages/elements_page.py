@@ -1,5 +1,7 @@
 import random
 import allure
+from selenium.webdriver.common.by import By
+
 from generator.generator import generated_person
 from locators.elements_page_locators import TextBoxLocators, CheckBoxLocators
 from pages.base_page import BasePage
@@ -36,13 +38,14 @@ class CheckBoxPage(BasePage):
 
     @allure.step("Expand all elements")
     def expand_all(self):
-        self.element_is_visible(self.locators.EXPAND_ALL_BUTTON).click()
+        self.element_is_visible(self.locators.EXPAND_BUTTON).click()
 
+    @allure.step("Click random element")
     def click_random_checkbox(self):
-        item_list = self.elements_are_visible(self.locators.ITEMS_LIST)
+        item_list = self.elements_are_visible(self.locators.ITEM_LIST)
         count = 21
         while count != 0:
-            item = item_list[random.randint(1, 16)]
+            item = random.choice(item_list)
             if count > 0:
                 self.go_to_element(item)
                 item.click()
@@ -50,17 +53,19 @@ class CheckBoxPage(BasePage):
             else:
                 break
 
+    @allure.step("Get checked box")
     def get_checked_checkboxes(self):
         checked_list = self.elements_are_present(self.locators.CHECKED_ITEMS)
-        data = []
-        for box in checked_list:
-            title_item = box.find_element(self.locators.ITEMS_TITLE)
-            data.append(title_item.text)
-        return str(data).replace(' ', '').replace('doc', '').replace('.', '').lower()
+        lst = []
+        for i in checked_list:
+            title_item = i.find_element("xpath", self.locators.TITLE_ITEM)
+            lst.append(title_item.text)
+        return str(lst).replace(' ', '').replace('doc', '').replace('.', '').lower()
 
+    @allure.step("Get output result")
     def get_output_result(self):
-        result_list = self.elements_are_present(self.locators.RESULT)
-        data = []
-        for item in result_list:
-            data.append(item.text)
-        return str(data).replace(' ', '').lower()
+        result_list = self.elements_are_present(self.locators.OUTPUT)
+        lst = []
+        for i in result_list:
+            lst.append(i.text)
+        return str(lst).replace(' ', '').lower()
