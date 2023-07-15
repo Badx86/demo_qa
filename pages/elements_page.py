@@ -1,9 +1,7 @@
 import random
 import allure
-from selenium.webdriver.common.by import By
-
 from generator.generator import generated_person
-from locators.elements_page_locators import TextBoxLocators, CheckBoxLocators
+from locators.elements_page_locators import TextBoxLocators, CheckBoxLocators, RadioButtonLocators
 from pages.base_page import BasePage
 
 
@@ -84,3 +82,23 @@ class CheckBoxPage(BasePage):
         for i in result_list:
             lst.append(i.text)
         return str(lst).replace(' ', '').lower()
+
+
+class RadioButtonPage(BasePage):
+    locators = RadioButtonLocators()
+
+    @allure.step("Check click on the buttons")
+    def click_on_the_radio_button(self, item):
+        choices = {
+            'yes': self.locators.YES_BUTTON,
+            'impressive': self.locators.IMPRESSIVE_BUTTON,
+            'no': self.locators.NO_BUTTON
+        }
+        element = self.element_is_visible(choices[item])
+        if not element.is_enabled():
+            return 'disabled'
+        element.click()
+
+    @allure.title("Check get output result")
+    def get_output_result(self):
+        return self.element_is_present(self.locators.TEXT_OUTPUT).text

@@ -23,3 +23,11 @@ class CheckBoxLocators:
     CHECKED_ITEMS = (By.CSS_SELECTOR, "svg[class='rct-icon rct-icon-check']")
     TITLE_ITEM = (".//ancestor::span[@class='rct-text']")
     OUTPUT = (By.CSS_SELECTOR, "span[class='text-success']")
+
+
+class RadioButtonLocators:
+    YES_BUTTON = (By.CSS_SELECTOR, "label[for='yesRadio']")
+    IMPRESSIVE_BUTTON = (By.CSS_SELECTOR, "label[for='impressiveRadio']")
+    NO_BUTTON = (By.CSS_SELECTOR, "label[for='noRadio']")
+    TEXT_OUTPUT = (By.CSS_SELECTOR, ".mt-3")
+    BTN_OUTPUT = (By.CSS_SELECTOR, ".text-success")
