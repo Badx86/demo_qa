@@ -14,4 +14,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Запустите команду для запуска вашего приложения
-CMD [ "python", "app.py" ]
+CMD ["pytest", "-s", "-v"]
