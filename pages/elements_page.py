@@ -102,3 +102,5 @@ class RadioButtonPage(BasePage):
     @allure.title("Check get output result")
     def get_output_result(self):
         return self.element_is_present(self.locators.TEXT_OUTPUT).text
+
+
