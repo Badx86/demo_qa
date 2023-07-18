@@ -2,12 +2,12 @@ from selenium.webdriver.common.by import By
 
 
 class TextBoxLocators:
+    SUBMIT_BUTTON = (By.CSS_SELECTOR, "button[id='submit']")
     # Text Box(input)
     FULL_NAME = (By.CSS_SELECTOR, "input[id='userName']")
     EMAIL = (By.CSS_SELECTOR, "input[id='userEmail']")
     CURRENT_ADDRESS = (By.CSS_SELECTOR, "textarea[id='currentAddress']")
     PERMANENT_ADDRESS = (By.CSS_SELECTOR, "textarea[id='permanentAddress']")
-    SUBMIT_BUTTON = (By.CSS_SELECTOR, "button[id='submit']")
 
     # Output form
     CREATED_FORM = By.XPATH, "//div[@id='output']"
@@ -31,3 +31,18 @@ class RadioButtonLocators:
     NO_BUTTON = (By.CSS_SELECTOR, "label[for='noRadio']")
     TEXT_OUTPUT = (By.CSS_SELECTOR, ".mt-3")
     BTN_OUTPUT = (By.CSS_SELECTOR, ".text-success")
+
+
+class WebTableLocators:
+    # Registration Form (buttons)
+    ADD_BUTTON = (By.CSS_SELECTOR, "#addNewRecordButton")
+    SUBMIT_BUTTON = (By.CSS_SELECTOR, "#submit")
+    # Registration Form (fields)
+    FIRST_NAME = (By.CSS_SELECTOR, "#firstName")
+    LAST_NAME = (By.CSS_SELECTOR, "#lastName")
+    EMAIL = (By.CSS_SELECTOR, "#userEmail")
+    AGE = (By.CSS_SELECTOR, "#age")
+    SALARY = (By.CSS_SELECTOR, "#salary")
+    DEPARTMENT = (By.CSS_SELECTOR, "#department")
+    #  Table
+    FULL_TABLE_LIST = (By. CSS_SELECTOR, "div[class='rt-tr-group']")

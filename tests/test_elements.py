@@ -1,9 +1,12 @@
+import random
+import time
+
 import allure
 import pytest
 
 from data.elements import expected_elements
-from data.urls import TEXT_BOX_URL, CHECK_BOX_URL, RADIO_BUTTON_URL
-from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage
+from data.urls import TEXT_BOX_URL, CHECK_BOX_URL, RADIO_BUTTON_URL, WEB_TABLES_URL
+from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage
 
 
 @allure.epic("Test Elements")
@@ -70,5 +73,16 @@ class TestElements:
                 output_text = page.get_output_result()
                 assert output_text == expected, f"Expected {expected}, but got {output_text}"
 
+    @allure.feature("Test Web Table")
+    class TestWebTable:
+        @allure.title("Create new person")
+        @allure.severity(allure.severity_level.CRITICAL)
+        def test_add_person(self, driver):
+            page = WebTablePage(driver, WEB_TABLES_URL)
+            page.open()
+            for i in range(random.randint(1, 7)):
+                new_person = page.add_new_person()
+                result = page.check_added_person()
+                assert new_person in result, "Where is a f*cking person?"
 
 
