@@ -89,7 +89,7 @@ class TestElements:
             page.open()
             key_word = page.add_new_person()[random.randint(0, 5)]
             page.check_some_person(key_word)
-            table_result = page.check_people()
+            table_result = page.check_search_person()
             assert key_word in table_result, "The person was not found in the table"
 
 
