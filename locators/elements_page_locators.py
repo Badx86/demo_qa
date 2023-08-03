@@ -37,6 +37,9 @@ class WebTableLocators:
     # Registration Form (buttons)
     ADD_BUTTON = (By.CSS_SELECTOR, "#addNewRecordButton")
     SUBMIT_BUTTON = (By.CSS_SELECTOR, "#submit")
+    DELETE_BUTTON = (By.CSS_SELECTOR, 'span[title="Delete"]')
+    # Search bar
+    SEARCH_FIELD = (By.CSS_SELECTOR, "#searchBox")
     # Registration Form (fields)
     FIRST_NAME = (By.CSS_SELECTOR, "#firstName")
     LAST_NAME = (By.CSS_SELECTOR, "#lastName")
@@ -44,5 +47,6 @@ class WebTableLocators:
     AGE = (By.CSS_SELECTOR, "#age")
     SALARY = (By.CSS_SELECTOR, "#salary")
     DEPARTMENT = (By.CSS_SELECTOR, "#department")
-    #  Table
+    # Table
     FULL_TABLE_LIST = (By. CSS_SELECTOR, "div[class='rt-tr-group']")
+    ROW_PARENT = ".//ancestor::div[@class='rt-tr-group']"

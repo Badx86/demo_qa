@@ -135,3 +135,12 @@ class WebTablePage(BasePage):
         for i in peoples:
             data.append(i.text.splitlines())
         return data
+
+    @allure.step("Check created person search")
+    def check_some_person(self, key_word):
+        self.element_is_visible(self.locators.SEARCH_FIELD).send_keys(key_word)
+
+    def check_search_person(self):
+        delete_button = self.element_is_present(self.locators.DELETE_BUTTON)
+        row = delete_button.find_element("xpath", self.locators.ROW_PARENT)
+        return row.text.splitlines()

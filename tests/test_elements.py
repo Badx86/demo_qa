@@ -1,9 +1,6 @@
 import random
-import time
-
 import allure
 import pytest
-
 from data.elements import expected_elements
 from data.urls import TEXT_BOX_URL, CHECK_BOX_URL, RADIO_BUTTON_URL, WEB_TABLES_URL
 from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage
@@ -84,5 +81,15 @@ class TestElements:
                 new_person = page.add_new_person()
                 result = page.check_added_person()
                 assert new_person in result, "Where is a f*cking person?"
+
+        @allure.title("Search person")
+        @allure.severity(allure.severity_level.NORMAL)
+        def test_check_people_in_the_table(self, driver):
+            page = WebTablePage(driver, WEB_TABLES_URL)
+            page.open()
+            key_word = page.add_new_person()[random.randint(0, 5)]
+            page.check_some_person(key_word)
+            table_result = page.check_people()
+            assert key_word in table_result, "The person was not found in the table"
 
 
