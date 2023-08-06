@@ -1,5 +1,6 @@
 import random
 import allure
+from selenium.webdriver.common.by import By
 from generator.generator import generated_person
 from locators.elements_page_locators import TextBoxLocators, CheckBoxLocators, RadioButtonLocators, WebTableLocators
 from pages.base_page import BasePage
@@ -129,7 +130,7 @@ class WebTablePage(BasePage):
             return [first_name, last_name, str(age), email, str(salary), department]
 
     @allure.step("Check that added person added to the table")
-    def check_added_person(self):
+    def check_new_added_person(self):
         peoples = self.elements_are_present(self.locators.FULL_TABLE_LIST)
         data = []
         for i in peoples:
@@ -140,7 +141,44 @@ class WebTablePage(BasePage):
     def check_some_person(self, key_word):
         self.element_is_visible(self.locators.SEARCH_FIELD).send_keys(key_word)
 
+    @allure.step("Search person")
     def check_search_person(self):
         delete_button = self.element_is_present(self.locators.DELETE_BUTTON)
         row = delete_button.find_element("xpath", self.locators.ROW_PARENT)
         return row.text.splitlines()
+
+    @allure.step("Update person info")
+    def update_person_info(self):
+        info = next(generated_person())
+        age = info.age
+        self.element_is_visible(self.locators.EDIT_PERSON_BUTTON).click()
+        self.element_is_visible(self.locators.AGE_INPUT).clear()
+        self.element_is_visible(self.locators.AGE_INPUT).send_keys(age)
+        self.element_is_visible(self.locators.SUBMIT_BUTTON).click()
+        return str(age)
+
+    @allure.title("Delete person")
+    def delete_person(self):
+        self.element_is_visible(self.locators.DELETE_BUTTON).click()
+
+    @allure.title("Check deleted person")
+    def check_deleted_person(self):
+        return self.element_is_present(self.locators.NO_ROWS_FOUND).text
+
+    @allure.title("Select up to rows")
+    def select_up_to_rows(self):
+        count = [5, 10, 20, 25, 50, 100]
+        data = []
+        for x in count:
+            count_row_button = self.element_is_present(self.locators.COUNT_ROW_LIST)
+            self.go_to_element(count_row_button)
+            count_row_button.click()
+            self.element_is_visible(By.CSS_SELECTOR, f'option[value="{x}"]').click()
+            data.append(self.check_rows_count())
+        return data
+
+    @allure.title("Get rows count")
+    def check_rows_count(self):
+        list_row = self.elements_are_present(self.locators.FULL_PEOPLE_LIST)
+        return len(list_row)
+

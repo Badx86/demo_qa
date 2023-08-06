@@ -50,3 +50,8 @@ class WebTableLocators:
     # Table
     FULL_TABLE_LIST = (By. CSS_SELECTOR, "div[class='rt-tr-group']")
     ROW_PARENT = ".//ancestor::div[@class='rt-tr-group']"
+    EDIT_PERSON_BUTTON = (By.CSS_SELECTOR, "span[title='Edit']")
+    AGE_INPUT = (By.CSS_SELECTOR, "input[id='age']")
+    NO_ROWS_FOUND = (By.XPATH, "//div[@class='rt-noData']")
+    COUNT_ROW_LIST = (By.CSS_SELECTOR, "select[aria-label='rows per page']")
+    FULL_PEOPLE_LIST = (By.CSS_SELECTOR, "div[class='rt-tr-group']")

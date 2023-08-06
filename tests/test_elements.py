@@ -74,17 +74,17 @@ class TestElements:
     class TestWebTable:
         @allure.title("Create new person")
         @allure.severity(allure.severity_level.CRITICAL)
-        def test_add_person(self, driver):
+        def test_web_table_add_person(self, driver):
             page = WebTablePage(driver, WEB_TABLES_URL)
             page.open()
             for i in range(random.randint(1, 7)):
                 new_person = page.add_new_person()
-                result = page.check_added_person()
+                result = page.check_new_added_person()
                 assert new_person in result, "Where is a f*cking person?"
 
         @allure.title("Search person")
         @allure.severity(allure.severity_level.NORMAL)
-        def test_check_people_in_the_table(self, driver):
+        def test_web_table_search_person(self, driver):
             page = WebTablePage(driver, WEB_TABLES_URL)
             page.open()
             key_word = page.add_new_person()[random.randint(0, 5)]
@@ -92,4 +92,34 @@ class TestElements:
             table_result = page.check_search_person()
             assert key_word in table_result, "The person was not found in the table"
 
+        @allure.title("Edit person")
+        @allure.severity(allure.severity_level.NORMAL)
+        def test_web_table_update_person(self, driver):
+            page = WebTablePage(driver, WEB_TABLES_URL)
+            page.open()
+            last_name = page.add_new_person()[1]
+            page.check_some_person(last_name)
+            age = page.update_person_info()
+            row = page.check_search_person()
+            assert age in row, "The person`s age has not been changed"
 
+        @allure.title("Delete person")
+        @allure.severity(allure.severity_level.NORMAL)
+        def test_web_table_delete_person(self, driver):
+            page = WebTablePage(driver, WEB_TABLES_URL)
+            page.open()
+            email = page.add_new_person()[3]
+            page.check_some_person(email)
+            page.delete_person()
+            text = page.check_deleted_person()
+            assert text == "No rows found", "The person card hasn`t been deleted"
+
+        @pytest.mark.xfail
+        @allure.title("Check count of rows")
+        @allure.severity(allure.severity_level.NORMAL)
+        def test_web_table_change_rows(self, driver):
+            page = WebTablePage(driver, WEB_TABLES_URL)
+            page.open()
+            count = page.select_up_to_rows()
+            assert count == [5, 10, 20, 25, 50,
+                             100], 'The number of rows in the table has not been changed or has changed incorrectly'
