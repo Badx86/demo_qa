@@ -2,7 +2,8 @@ import random
 import allure
 from selenium.webdriver.common.by import By
 from generator.generator import generated_person
-from locators.elements_page_locators import TextBoxLocators, CheckBoxLocators, RadioButtonLocators, WebTableLocators
+from locators.elements_page_locators import TextBoxLocators, CheckBoxLocators, RadioButtonLocators, WebTableLocators, \
+    ButtonsLocators
 from pages.base_page import BasePage
 
 
@@ -182,3 +183,27 @@ class WebTablePage(BasePage):
         list_row = self.elements_are_present(self.locators.FULL_PEOPLE_LIST)
         return len(list_row)
 
+
+class ButtonsPage(BasePage):
+    locators = ButtonsLocators()
+
+    @allure.title("Double click on button")
+    def double_click(self):
+        button_element = self.driver.find_element(*self.locators.DOUBLE_CLICK_BTN)
+        self.action_double_click(button_element)
+        return self.check_output(self.locators.DOUBLE_CLICK_MSG)
+
+    @allure.title("Right click on button")
+    def right_click(self):
+        button_element = self.driver.find_element(*self.locators.RIGHT_CLICK_BTN)
+        self.action_right_click(button_element)
+        return self.check_output(self.locators.RIGHT_CLICK_MSG)
+
+    @allure.title("Standard click on button")
+    def standard_click(self):
+        self.element_is_visible(self.locators.CLICK_BTN).click()
+        return self.check_output(self.locators.CLICK_MSG)
+
+    @allure.title("Check output text")
+    def check_output(self, element):
+        return self.element_is_present(element).text

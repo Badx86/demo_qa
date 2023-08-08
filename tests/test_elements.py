@@ -2,8 +2,8 @@ import random
 import allure
 import pytest
 from data.elements import expected_elements
-from data.urls import TEXT_BOX_URL, CHECK_BOX_URL, RADIO_BUTTON_URL, WEB_TABLES_URL
-from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage
+from data.urls import TEXT_BOX_URL, CHECK_BOX_URL, RADIO_BUTTON_URL, WEB_TABLES_URL, BUTTONS_URL
+from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage
 
 
 @allure.epic("Test Elements")
@@ -123,3 +123,17 @@ class TestElements:
             count = page.select_up_to_rows()
             assert count == [5, 10, 20, 25, 50,
                              100], 'The number of rows in the table has not been changed or has changed incorrectly'
+
+    @allure.feature("Test click buttons")
+    class TestButtons:
+        @allure.title("Different clicks on buttons")
+        @allure.severity(allure.severity_level.NORMAL)
+        def test_different_clicks_on_buttons(self, driver):
+            page = ButtonsPage(driver, BUTTONS_URL)
+            page.open()
+            double = page.double_click()
+            right = page.right_click()
+            standard = page.standard_click()
+            assert double == 'You have done a double click'
+            assert right == 'You have done a right click'
+            assert standard == 'You have done a dynamic click'

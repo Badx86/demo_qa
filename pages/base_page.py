@@ -102,6 +102,18 @@ class BasePage:
         action.move_to_element(element)
         action.perform()
 
+    @allure.step('Double click on the element')
+    def action_double_click(self, element):
+        action = ActionChains(self.driver)
+        action.double_click(element)
+        action.perform()
+
+    @allure.step('Right click on the element')
+    def action_right_click(self, element):
+        action = ActionChains(self.driver)
+        action.context_click(element)
+        action.perform()
+
     @allure.step("Find element by text")
     def find_element_by_text(self, locator, text, timeout=5):
         """

@@ -8,7 +8,6 @@ class TextBoxLocators:
     EMAIL = (By.CSS_SELECTOR, "input[id='userEmail']")
     CURRENT_ADDRESS = (By.CSS_SELECTOR, "textarea[id='currentAddress']")
     PERMANENT_ADDRESS = (By.CSS_SELECTOR, "textarea[id='permanentAddress']")
-
     # Output form
     CREATED_FORM = By.XPATH, "//div[@id='output']"
     CREATED_NAME = (By.CSS_SELECTOR, "#output #name")
@@ -48,10 +47,21 @@ class WebTableLocators:
     SALARY = (By.CSS_SELECTOR, "#salary")
     DEPARTMENT = (By.CSS_SELECTOR, "#department")
     # Table
-    FULL_TABLE_LIST = (By. CSS_SELECTOR, "div[class='rt-tr-group']")
+    FULL_TABLE_LIST = (By.CSS_SELECTOR, "div[class='rt-tr-group']")
     ROW_PARENT = ".//ancestor::div[@class='rt-tr-group']"
     EDIT_PERSON_BUTTON = (By.CSS_SELECTOR, "span[title='Edit']")
     AGE_INPUT = (By.CSS_SELECTOR, "input[id='age']")
     NO_ROWS_FOUND = (By.XPATH, "//div[@class='rt-noData']")
     COUNT_ROW_LIST = (By.CSS_SELECTOR, "select[aria-label='rows per page']")
     FULL_PEOPLE_LIST = (By.CSS_SELECTOR, "div[class='rt-tr-group']")
+
+
+class ButtonsLocators:
+    # Buttons
+    DOUBLE_CLICK_BTN = (By.CSS_SELECTOR, "button[id='doubleClickBtn']")
+    RIGHT_CLICK_BTN = (By.CSS_SELECTOR, "button[id='rightClickBtn']")
+    CLICK_BTN = (By.CSS_SELECTOR, "div[class='mt-4']:nth-child(3n) button")
+    # Output text
+    DOUBLE_CLICK_MSG = (By.CSS_SELECTOR, "p[id='doubleClickMessage']")
+    RIGHT_CLICK_MSG = (By.CSS_SELECTOR, "p[id='rightClickMessage']")
+    CLICK_MSG = (By.CSS_SELECTOR, "p[id='dynamicClickMessage']")
