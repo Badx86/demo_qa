@@ -1,9 +1,10 @@
 import random
 import allure
+import requests
 from selenium.webdriver.common.by import By
 from generator.generator import generated_person
 from locators.elements_page_locators import TextBoxLocators, CheckBoxLocators, RadioButtonLocators, WebTableLocators, \
-    ButtonsLocators
+    ButtonsLocators, LinksLocators
 from pages.base_page import BasePage
 
 
@@ -207,3 +208,38 @@ class ButtonsPage(BasePage):
     @allure.title("Check output text")
     def check_output(self, element):
         return self.element_is_present(element).text
+
+
+class LinksPage(BasePage):
+    locators = LinksLocators()
+
+    @allure.title("Checking new tab simple link")
+    def check_new_tab_simple_link(self):
+        simple_link = self.element_is_present(self.locators.SIMPLE_LINK)
+        link_href = simple_link.get_attribute("href")
+        request = requests.get(f"{link_href}")
+        if request.status_code == 200:
+            simple_link.click()
+            self.driver.switch_to.window(self.driver.window_handles[1])
+            url = self.driver.current_url
+            return link_href, url
+        else:
+            return link_href, request.status_code
+
+    @allure.title("Links text responses")
+    def check_link_response(self, link_locator):
+        link_element = self.element_is_present(link_locator)
+        self.driver.execute_script("arguments[0].scrollIntoView(true);", link_element)
+        link_element.click()
+        response_text_element = self.element_is_present(self.locators.LINK_RESPONSE_TEXT)
+        return response_text_element.text
+
+    LINKS_RESPONSES = {
+        LinksLocators.CREATED: "Link has responded with staus 201 and status text Created",
+        LinksLocators.NO_CONTENT: "Link has responded with staus 204 and status text No Content",
+        LinksLocators.MOVED: "Link has responded with staus 301 and status text Moved Permanently",
+        LinksLocators.BAD_REQUEST: "Link has responded with staus 400 and status text Bad Request",
+        LinksLocators.UNAUTHORIZED: "Link has responded with staus 401 and status text Unauthorized",
+        LinksLocators.FORBIDDEN: "Link has responded with staus 403 and status text Forbidden",
+        LinksLocators.NOT_FOUND: "Link has responded with staus 404 and status text Not Found"
+    }

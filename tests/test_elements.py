@@ -2,8 +2,9 @@ import random
 import allure
 import pytest
 from data.elements import expected_elements
-from data.urls import TEXT_BOX_URL, CHECK_BOX_URL, RADIO_BUTTON_URL, WEB_TABLES_URL, BUTTONS_URL
-from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage
+from data.urls import TEXT_BOX_URL, CHECK_BOX_URL, RADIO_BUTTON_URL, WEB_TABLES_URL, BUTTONS_URL, LINKS_URL
+from locators.elements_page_locators import LinksLocators
+from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage, LinksPage
 
 
 @allure.epic("Test Elements")
@@ -137,3 +138,22 @@ class TestElements:
             assert double == 'You have done a double click'
             assert right == 'You have done a right click'
             assert standard == 'You have done a dynamic click'
+
+    @allure.feature("Test link clicks")
+    class TestLinks:
+        @allure.title("Check links")
+        @allure.severity(allure.severity_level.NORMAL)
+        def test_check_link(self, driver):
+            page = LinksPage(driver, LINKS_URL)
+            page.open()
+            href_link, current_url = page.check_new_tab_simple_link()
+            assert href_link == current_url
+
+        @pytest.mark.parametrize("link_locator, expected_response", LinksPage.LINKS_RESPONSES.items())
+        @allure.title("Check link responses")
+        @allure.severity(allure.severity_level.NORMAL)
+        def test_check_link_responses(self, driver, link_locator, expected_response):
+            page = LinksPage(driver, LINKS_URL)
+            page.open()
+            actual_response = page.check_link_response(link_locator)
+            assert expected_response in actual_response, f"Expected '{expected_response}', Actual '{actual_response}'"

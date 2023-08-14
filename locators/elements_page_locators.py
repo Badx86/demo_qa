@@ -65,3 +65,18 @@ class ButtonsLocators:
     DOUBLE_CLICK_MSG = (By.CSS_SELECTOR, "p[id='doubleClickMessage']")
     RIGHT_CLICK_MSG = (By.CSS_SELECTOR, "p[id='rightClickMessage']")
     CLICK_MSG = (By.CSS_SELECTOR, "p[id='dynamicClickMessage']")
+
+
+class LinksLocators:
+    # New Tab
+    SIMPLE_LINK = (By.CSS_SELECTOR, "a[id='simpleLink']")
+    # Api call
+    CREATED = (By.CSS_SELECTOR, "a[id='created']")
+    NO_CONTENT = (By.CSS_SELECTOR, "a[id='no-content']")
+    MOVED = (By.CSS_SELECTOR, "a[id='moved']")
+    BAD_REQUEST = (By.CSS_SELECTOR, "a[id='bad-request']")
+    UNAUTHORIZED = (By.CSS_SELECTOR, "a[id='unauthorized']")
+    FORBIDDEN = (By.CSS_SELECTOR, "a[id='forbidden']")
+    NOT_FOUND = (By.CSS_SELECTOR, "a[id='invalid-url']")
+    # Link Response Text
+    LINK_RESPONSE_TEXT = (By.CSS_SELECTOR, "p[id='linkResponse']")
