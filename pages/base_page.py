@@ -4,6 +4,7 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait as wait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
 
 class BasePage:
@@ -170,3 +171,5 @@ class BasePage:
         element.click()
         return element
 
+    def find_element(self, locator, timeout=10):
+        return WebDriverWait(self.driver, timeout).until(EC.presence_of_element_located(locator))

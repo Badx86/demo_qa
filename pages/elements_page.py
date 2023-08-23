@@ -4,7 +4,7 @@ import requests
 from selenium.webdriver.common.by import By
 from generator.generator import generated_person
 from locators.elements_page_locators import TextBoxLocators, CheckBoxLocators, RadioButtonLocators, WebTableLocators, \
-    ButtonsLocators, LinksLocators
+    ButtonsLocators, LinksLocators, BrokenLinksLocators
 from pages.base_page import BasePage
 
 
@@ -243,3 +243,18 @@ class LinksPage(BasePage):
         LinksLocators.FORBIDDEN: "Link has responded with staus 403 and status text Forbidden",
         LinksLocators.NOT_FOUND: "Link has responded with staus 404 and status text Not Found"
     }
+
+
+class BrokenLinksImagesPage(BasePage):
+    locators = BrokenLinksLocators()
+
+    @allure.title("Test Images Visibility")
+    def check_images(self):
+        valid_image_size = self.get_image_size(self.locators.VALID_IMAGE)
+        broken_image_size = self.get_image_size(self.locators.BROKEN_IMAGE)
+        return valid_image_size, broken_image_size
+
+    def get_image_size(self, locator):
+        element = self.find_element(locator)
+        size = element.size
+        return size['width'], size['height']

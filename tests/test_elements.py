@@ -2,9 +2,10 @@ import random
 import allure
 import pytest
 from data.elements import expected_elements
-from data.urls import TEXT_BOX_URL, CHECK_BOX_URL, RADIO_BUTTON_URL, WEB_TABLES_URL, BUTTONS_URL, LINKS_URL
-from locators.elements_page_locators import LinksLocators
-from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage, LinksPage
+from data.urls import TEXT_BOX_URL, CHECK_BOX_URL, RADIO_BUTTON_URL, WEB_TABLES_URL, BUTTONS_URL, LINKS_URL, \
+    BROKEN_LINKS_URL
+from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage, LinksPage, \
+    BrokenLinksImagesPage
 
 
 @allure.epic("Test Elements")
@@ -123,7 +124,7 @@ class TestElements:
             page.open()
             count = page.select_up_to_rows()
             assert count == [5, 10, 20, 25, 50,
-                             100], 'The number of rows in the table has not been changed or has changed incorrectly'
+                            100], 'The number of rows in the table has not been changed or has changed incorrectly'
 
     @allure.feature("Test click buttons")
     class TestButtons:
@@ -157,3 +158,17 @@ class TestElements:
             page.open()
             actual_response = page.check_link_response(link_locator)
             assert expected_response in actual_response, f"Expected '{expected_response}', Actual '{actual_response}'"
+
+    @allure.feature("Test Broken Links-Images")
+    class TestBrokenLinks:
+        @allure.title("Check Images Size")
+        @allure.severity(allure.severity_level.NORMAL)
+        def test_images(self, driver):
+            page = BrokenLinksImagesPage(driver, BROKEN_LINKS_URL)
+            page.open()
+            valid_image_size, broken_image_size = page.check_images()
+            # Check valid image size
+            assert valid_image_size == (347, 100), f"Valid image size is not as expected: {valid_image_size}"
+            # Check broken image size
+            assert broken_image_size == (16, 16), f"Broken image size is not as expected: {broken_image_size}"
+

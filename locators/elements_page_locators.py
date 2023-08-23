@@ -80,3 +80,10 @@ class LinksLocators:
     NOT_FOUND = (By.CSS_SELECTOR, "a[id='invalid-url']")
     # Link Response Text
     LINK_RESPONSE_TEXT = (By.CSS_SELECTOR, "p[id='linkResponse']")
+
+
+class BrokenLinksLocators:
+    VALID_IMAGE = (By.XPATH, "//div[@class='body-height']//img[1]")
+    BROKEN_IMAGE = (By.CSS_SELECTOR, "img[src='/images/Toolsqa_1.jpg']")
+    VALID_LINK = (By.CSS_SELECTOR, "a[href='http://demoqa.com']")
+    BROKEN_LINK = (By.XPATH, "//a[normalize-space()='Click Here for Broken Link']")
