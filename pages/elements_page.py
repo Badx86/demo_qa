@@ -248,13 +248,25 @@ class LinksPage(BasePage):
 class BrokenLinksImagesPage(BasePage):
     locators = BrokenLinksLocators()
 
-    @allure.title("Test Images Visibility")
+    @allure.title("")
     def check_images(self):
         valid_image_size = self.get_image_size(self.locators.VALID_IMAGE)
         broken_image_size = self.get_image_size(self.locators.BROKEN_IMAGE)
         return valid_image_size, broken_image_size
 
+    @allure.title("")
     def get_image_size(self, locator):
         element = self.find_element(locator)
         size = element.size
         return size['width'], size['height']
+
+    @allure.title("")
+    def check_links(self):
+        valid_link = self.find_element(self.locators.VALID_LINK)
+        self.driver.execute_script("arguments[0].scrollIntoView();", valid_link)
+        broken_link = self.find_element(self.locators.BROKEN_LINK)
+        valid_link.click()
+        self.driver.back()
+        broken_link.click()
+        invalid_link_page_text = self.find_element(self.locators.INVALID_LINK_PAGE).text
+        return invalid_link_page_text

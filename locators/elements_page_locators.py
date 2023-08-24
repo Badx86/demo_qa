@@ -87,3 +87,4 @@ class BrokenLinksLocators:
     BROKEN_IMAGE = (By.CSS_SELECTOR, "img[src='/images/Toolsqa_1.jpg']")
     VALID_LINK = (By.CSS_SELECTOR, "a[href='http://demoqa.com']")
     BROKEN_LINK = (By.XPATH, "//a[normalize-space()='Click Here for Broken Link']")
+    INVALID_LINK_PAGE = (By.CSS_SELECTOR, "div > p")

@@ -160,15 +160,21 @@ class TestElements:
             assert expected_response in actual_response, f"Expected '{expected_response}', Actual '{actual_response}'"
 
     @allure.feature("Test Broken Links-Images")
-    class TestBrokenLinks:
+    class TestBrokenLinksImages:
         @allure.title("Check Images Size")
         @allure.severity(allure.severity_level.NORMAL)
         def test_images(self, driver):
             page = BrokenLinksImagesPage(driver, BROKEN_LINKS_URL)
             page.open()
             valid_image_size, broken_image_size = page.check_images()
-            # Check valid image size
             assert valid_image_size == (347, 100), f"Valid image size is not as expected: {valid_image_size}"
-            # Check broken image size
             assert broken_image_size == (16, 16), f"Broken image size is not as expected: {broken_image_size}"
 
+        @allure.title("Check Links")
+        @allure.severity(allure.severity_level.NORMAL)
+        def test_links(self, driver):
+            page = BrokenLinksImagesPage(driver, BROKEN_LINKS_URL)
+            page.open()
+            invalid_link_page_text = page.check_links()
+            assert "This page returned a 500 status code" in invalid_link_page_text,\
+                "Invalid link page text is not as expected"
