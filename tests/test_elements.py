@@ -187,7 +187,7 @@ class TestElements:
             page = UploadDownloadPage(driver, UPLOAD_AND_DOWNLOAD_URL)
             page.open()
             file_name, result = page.upload_file()
-            assert file_name == result
+            assert file_name == result, "File has not been upload"
 
         @allure.title("Download File")
         @allure.severity(allure.severity_level.NORMAL)
@@ -195,4 +195,4 @@ class TestElements:
             page = UploadDownloadPage(driver, UPLOAD_AND_DOWNLOAD_URL)
             page.open()
             check = page.download_file()
-            assert check is True
+            assert check is True, "File has not been download"
