@@ -3,9 +3,9 @@ import allure
 import pytest
 from data.elements import expected_elements
 from data.urls import TEXT_BOX_URL, CHECK_BOX_URL, RADIO_BUTTON_URL, WEB_TABLES_URL, BUTTONS_URL, LINKS_URL, \
-    BROKEN_LINKS_URL
+    BROKEN_LINKS_URL, UPLOAD_AND_DOWNLOAD_URL
 from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage, LinksPage, \
-    BrokenLinksImagesPage
+    BrokenLinksImagesPage, UploadDownloadPage
 
 
 @allure.epic("Test Elements")
@@ -178,3 +178,21 @@ class TestElements:
             invalid_link_page_text = page.check_links()
             assert "This page returned a 500 status code" in invalid_link_page_text,\
                 "Invalid link page text is not as expected"
+
+    @allure.feature("Test File Upload & Download")
+    class TestUploadDownload:
+        @allure.title("Upload File")
+        @allure.severity(allure.severity_level.NORMAL)
+        def test_upload_file(self, driver):
+            page = UploadDownloadPage(driver, UPLOAD_AND_DOWNLOAD_URL)
+            page.open()
+            file_name, result = page.upload_file()
+            assert file_name == result
+
+        @allure.title("Download File")
+        @allure.severity(allure.severity_level.NORMAL)
+        def test_download_file(self, driver):
+            page = UploadDownloadPage(driver, UPLOAD_AND_DOWNLOAD_URL)
+            page.open()
+            check = page.download_file()
+            assert check is True

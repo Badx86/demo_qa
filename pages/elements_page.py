@@ -1,10 +1,12 @@
+import base64
+import os
 import random
 import allure
 import requests
 from selenium.webdriver.common.by import By
-from generator.generator import generated_person
+from generator.generator import generated_person, generated_file
 from locators.elements_page_locators import TextBoxLocators, CheckBoxLocators, RadioButtonLocators, WebTableLocators, \
-    ButtonsLocators, LinksLocators, BrokenLinksLocators
+    ButtonsLocators, LinksLocators, BrokenLinksLocators, UploadDownloadLocators
 from pages.base_page import BasePage
 
 
@@ -248,19 +250,19 @@ class LinksPage(BasePage):
 class BrokenLinksImagesPage(BasePage):
     locators = BrokenLinksLocators()
 
-    @allure.title("")
+    @allure.title("Check Images")
     def check_images(self):
         valid_image_size = self.get_image_size(self.locators.VALID_IMAGE)
         broken_image_size = self.get_image_size(self.locators.BROKEN_IMAGE)
         return valid_image_size, broken_image_size
 
-    @allure.title("")
+    @allure.title("Get Image Size")
     def get_image_size(self, locator):
         element = self.find_element(locator)
         size = element.size
         return size['width'], size['height']
 
-    @allure.title("")
+    @allure.title("Check Links")
     def check_links(self):
         valid_link = self.find_element(self.locators.VALID_LINK)
         self.driver.execute_script("arguments[0].scrollIntoView();", valid_link)
@@ -270,3 +272,30 @@ class BrokenLinksImagesPage(BasePage):
         broken_link.click()
         invalid_link_page_text = self.find_element(self.locators.INVALID_LINK_PAGE).text
         return invalid_link_page_text
+
+
+class UploadDownloadPage(BasePage):
+    locators = UploadDownloadLocators()
+
+    @allure.title("Upload File")
+    def upload_file(self):
+        file_name, path = generated_file()
+        self.element_is_present(self.locators.UPLOAD_BUTTON).send_keys(path)
+        os.remove(path)
+        text = self.element_is_present(self.locators.UPLOADED_FILE_PATH).text
+        return file_name.split('\\')[-1], text.split('\\')[-1]
+
+    @allure.title("Download File")
+    def download_file(self):
+        link = self.element_is_present(self.locators.DOWNLOAD_BUTTON).get_attribute('href')
+        link_b = base64.b64decode(link)
+        path_file_name = rf"C:\Users\мвидео\PycharmProjects\DemoQA\filetest{random.randint(0,999)}.jpg"
+        with open(path_file_name, "wb+") as f:
+            offset = link_b.find(b"\xff\xd8")
+            f.write(link_b[offset:])
+            check_file = os.path.exists(path_file_name)
+            f.close()
+        os.remove(path_file_name)
+        return check_file
+
+

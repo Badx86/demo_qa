@@ -88,3 +88,9 @@ class BrokenLinksLocators:
     VALID_LINK = (By.CSS_SELECTOR, "a[href='http://demoqa.com']")
     BROKEN_LINK = (By.XPATH, "//a[normalize-space()='Click Here for Broken Link']")
     INVALID_LINK_PAGE = (By.CSS_SELECTOR, "div > p")
+
+
+class UploadDownloadLocators:
+    DOWNLOAD_BUTTON = (By.CSS_SELECTOR, "#downloadButton")
+    UPLOAD_BUTTON = (By.CSS_SELECTOR, "#uploadFile")
+    UPLOADED_FILE_PATH = (By.CSS_SELECTOR, "#uploadedFilePath")
