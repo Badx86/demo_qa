@@ -3,3 +3,5 @@ venv/
 allure-results/
 allure-report/
 __pycache__/
+*.pyc
+*.pyo
